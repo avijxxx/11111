@@ -3,9 +3,6 @@ name: Build OpenWRT
 
 #CI计划
 on:
-  #自动编译：每周日 22:00 (UTC)
-  schedule:
-    - cron: 0 22 * * 0
   #手动编译
   workflow_dispatch:
     inputs:
@@ -23,10 +20,13 @@ permissions: write-all
 
 #CI任务
 jobs:
-  cleanup:
-    name: 清理旧版本
+  build:
+    name: 编译固件
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
       - name: Delete old Releases and Workflows
         uses: ophub/delete-releases-workflows@main
         with:
@@ -36,14 +36,6 @@ jobs:
           delete_tags: true
           delete_workflows: true
           workflows_keep_day: 0
-
-  build:
-    needs: cleanup
-    name: 编译固件
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Projects
-        uses: actions/checkout@main
 
       - name: Initialization Environment
         env:
