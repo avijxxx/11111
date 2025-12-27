@@ -64,12 +64,13 @@ jobs:
           echo "WRT_THEME=aurora" >> $GITHUB_ENV
           echo "WRT_NAME=CWRT" >> $GITHUB_ENV
           echo "WRT_SSID=123123" >> $GITHUB_ENV
-          echo "WRT_WORD=88888888" >> $GITHUB_ENV
-          echo "WRT_IP=192.168.10.1" >> $GITHUB_ENV
+          echo "WRT_WORD=88896825" >> $GITHUB_ENV
+          echo "WRT_IP=192.168.10.12" >> $GITHUB_ENV
           echo "WRT_PW=无" >> $GITHUB_ENV
           echo "WRT_REPO=https://github.com/padavanonly/immortalwrt-mt798x-6.6.git" >> $GITHUB_ENV
           echo "WRT_BRANCH=openwrt-24.10-6.6" >> $GITHUB_ENV
-          echo "WRT_INFO=padavanonly/immortalwrt-mt798x-6.6" >> $GITHUB_ENV
+          WRT_INFO_RAW="padavanonly/immortalwrt-mt798x-6.6"
+          echo "WRT_INFO=${WRT_INFO_RAW//\//-}" >> $GITHUB_ENV
           echo "WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/MT7986.txt)" >> $GITHUB_ENV
           echo "WRT_KVER=none" >> $GITHUB_ENV
           echo "WRT_LIST=none" >> $GITHUB_ENV
