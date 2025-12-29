@@ -96,3 +96,14 @@ if [ -d *"luci-app-netspeedtest"* ]; then
 
 	cd $PKG_PATH && echo "netspeedtest has been fixed!"
 fi
+
+#修复EasyTier二进制文件下载路径
+ET_MAKEFILE="./easytier/easytier/Makefile"
+if [ -f "$ET_MAKEFILE" ]; then
+	echo " "
+
+	sed -i 's|wget https://github.com/EasyTier/EasyTier/releases/download/v\$(PKG_VERSION)/\$(PKG_NAME)-linux-\$(APP_ARCH)-v\$(PKG_VERSION).zip -O \$(PKG_NAME)-\$(PKG_VERSION).zip|wget https://github.com/EasyTier/EasyTier/releases/download/v\$(PKG_VERSION)/\$(PKG_NAME)-linux-\$(APP_ARCH)-v\$(PKG_VERSION).zip -O \$(PKG_BUILD_DIR)/../\$(PKG_NAME)-\$(PKG_VERSION).zip|g' $ET_MAKEFILE
+	sed -i 's|\[ ! -f \$(PKG_BUILD_DIR)/\$(PKG_NAME)-\$(PKG_VERSION).zip \]|\[ ! -f \$(PKG_BUILD_DIR)/../\$(PKG_NAME)-\$(PKG_VERSION).zip \]|g' $ET_MAKEFILE
+	sed -i 's|unzip -j \$(PKG_NAME)-\$(PKG_VERSION).zip -d \$(PKG_BUILD_DIR)|unzip -j \$(PKG_BUILD_DIR)/../\$(PKG_NAME)-\$(PKG_VERSION).zip -d \$(PKG_BUILD_DIR)|g' $ET_MAKEFILE
+
+	cd $PKG_PATH && echo "easytier has been fixed!"
