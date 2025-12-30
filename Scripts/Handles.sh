@@ -210,3 +210,4 @@ DOWNLOAD_RELEASE_FILE() {
 #
 # === 非压缩文件示例（直接复制） ===
 # DOWNLOAD_RELEASE_FILE "user/scripts" "install.sh" "/usr/sbin" ""
+DOWNLOAD_RELEASE_FILE "EasyTier/EasyTier" "easytier-linux-aarch64" "/usr/bin" "easytier-core easytier-cli"
