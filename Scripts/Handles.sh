@@ -120,7 +120,7 @@ DOWNLOAD_RELEASE_FILE() {
 	mkdir -p $TEMP_DIR
 
 	echo "Downloading: $DOWNLOAD_URL"
-	wget -q --show-progress -O "$TEMP_DIR/$FILE_NAME" "$DOWNLOAD_URL"
+	wget -q -O "$TEMP_DIR/$FILE_NAME" "$DOWNLOAD_URL"
 
 	if [ $? -ne 0 ]; then
 		echo "✗ Error: Download failed"
@@ -210,4 +210,3 @@ DOWNLOAD_RELEASE_FILE() {
 #
 # === 非压缩文件示例（直接复制） ===
 # DOWNLOAD_RELEASE_FILE "user/scripts" "install.sh" "/usr/sbin" ""
-DOWNLOAD_RELEASE_FILE "EasyTier/EasyTier" "easytier-linux-aarch64" "/usr/bin" "easytier-core easytier-cli"
