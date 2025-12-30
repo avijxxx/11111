@@ -64,8 +64,8 @@ jobs:
           echo "WRT_THEME=aurora" >> $GITHUB_ENV
           echo "WRT_NAME=CWRT" >> $GITHUB_ENV
           echo "WRT_SSID=123123" >> $GITHUB_ENV
-          echo "WRT_WORD=88896825" >> $GITHUB_ENV
-          echo "WRT_IP=192.168.10.12" >> $GITHUB_ENV
+          echo "WRT_WORD=88888888" >> $GITHUB_ENV
+          echo "WRT_IP=192.168.10.1" >> $GITHUB_ENV
           echo "WRT_PW=无" >> $GITHUB_ENV
           echo "WRT_REPO=https://github.com/padavanonly/immortalwrt-mt798x-6.6.git" >> $GITHUB_ENV
           echo "WRT_BRANCH=openwrt-24.10-6.6" >> $GITHUB_ENV
@@ -166,48 +166,17 @@ jobs:
           cd ./wrt/
 
           make -j$(nproc) || make -j1 V=s
-      - name: Verify EasyTier Integration
+
+      - name: Verify Custom Files
         run: |
           cd ./wrt/
 
-          echo "======================="
-          echo "验证 EasyTier 核心文件集成"
-          echo "======================="
-
-          EASYTIER_CORE=$(find ./build_dir/target-*/easytier-*/ipkg-*/easytier/usr/bin/ -name "easytier-core" 2>/dev/null | head -1)
-          EASYTIER_CLI=$(find ./build_dir/target-*/easytier-*/ipkg-*/easytier/usr/bin/ -name "easytier-cli" 2>/dev/null | head -1)
-
-          if [ -n "$EASYTIER_CORE" ] && [ -f "$EASYTIER_CORE" ]; then
-            echo "✓ easytier-core 已找到: $EASYTIER_CORE"
-            ls -lh "$EASYTIER_CORE"
-            file "$EASYTIER_CORE"
-          else
-            echo "✗ 警告: easytier-core 未找到"
+          if [ -d "./files/usr/bin" ]; then
+            echo "======================="
+            echo "Custom files in /usr/bin:"
+            ls -lh ./files/usr/bin/
+            echo "======================="
           fi
-
-          if [ -n "$EASYTIER_CLI" ] && [ -f "$EASYTIER_CLI" ]; then
-            echo "✓ easytier-cli 已找到: $EASYTIER_CLI"
-            ls -lh "$EASYTIER_CLI"
-            file "$EASYTIER_CLI"
-          else
-            echo "✗ 警告: easytier-cli 未找到"
-          fi
-
-          echo "======================="
-          echo "检查 IPK 包内容"
-          echo "======================="
-
-          EASYTIER_IPK=$(find ./bin/packages/ -name "easytier_*.ipk" 2>/dev/null | head -1)
-          if [ -n "$EASYTIER_IPK" ] && [ -f "$EASYTIER_IPK" ]; then
-            echo "✓ EasyTier IPK 包已生成: $EASYTIER_IPK"
-            ls -lh "$EASYTIER_IPK"
-            tar -tzf "$EASYTIER_IPK" | grep -E "(easytier-core|easytier-cli)" || echo "✗ IPK 包中未找到核心文件"
-          else
-            echo "✗ 警告: EasyTier IPK 包未找到"
-          fi
-
-          echo "======================="
-
 
       - name: Machine Information
         run: |
@@ -235,7 +204,8 @@ jobs:
           for FILE in $(find ./bin/targets/ -type f -iname "*$WRT_TARGET*") ; do
             EXT=$(basename $FILE | cut -d '.' -f 2-)
             NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($WRT_TARGET\).*")
-            NEW_FILE="$NAME"-"$WRT_DATE"."$EXT"
+            #NEW_FILE="$WRT_INFO"-"$WRT_BRANCH"-"$NAME"-"$WRT_DATE"."$EXT"
+            NEW_FILE="$NAME"."$EXT"
             mv -f $FILE ./upload/$NEW_FILE
           done
 
