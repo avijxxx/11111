@@ -16,7 +16,7 @@ sed -i "s/ImmortalWrt-2.4G/$WRT_SSID_2G/g" $WIFI_FILE
 sed -i "s/ImmortalWrt-5G/$WRT_SSID_5G/g" $WIFI_FILE
 #修改WIFI加密
 sed -i "s/encryption=none/encryption=psk2+ccmp/g" $WIFI_FILE
-#修改2.4G WIFI密码
+#修改WIFI密码
 sed -i "/ssid=\${ssid}$/a \\\t\t\t\t\tif [ \$idx -eq 1 ]; then key=\"$WRT_WORD_2G\"; else key=\"$WRT_WORD_5G\"; fi" $WIFI_FILE
 sed -i "/set wireless.default_\${dev}.encryption=psk2+ccmp/a \\\t\t\t\t\tset wireless.default_\${dev}.key=\${key}" $WIFI_FILE
 
