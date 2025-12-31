@@ -65,8 +65,7 @@ jobs:
           echo "WRT_NAME=CWRT" >> $GITHUB_ENV
           echo "WRT_SSID_2G=123123_2.4" >> $GITHUB_ENV
           echo "WRT_SSID_5G=123123" >> $GITHUB_ENV
-          echo "WRT_WORD_2G=88896825" >> $GITHUB_ENV
-          echo "WRT_WORD_5G=88896825" >> $GITHUB_ENV
+          echo "WRT_WORD=88896825" >> $GITHUB_ENV
           echo "WRT_IP=192.168.10.12" >> $GITHUB_ENV
           echo "WRT_PW=无" >> $GITHUB_ENV
           echo "WRT_REPO=https://github.com/padavanonly/immortalwrt-mt798x-6.6.git" >> $GITHUB_ENV
